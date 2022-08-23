@@ -12,7 +12,6 @@ let wallet = new ethers.Wallet.fromEncryptedJsonSync(
   process.env.PRIVATE_KEY_PASSWORD
 );
 wallet = await wallet.connect(provider);
-/*private key to sign contract*/
 //const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 //contract application binary interface compiled file
 const abi = fs.readFileSync("./SimpleStorage_sol_SimpleStorage.abi", "utf-8");
