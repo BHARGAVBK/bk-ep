@@ -7,13 +7,13 @@ const encryptedJson = fs.readFileSync("./.encryptedKey.json", "utf-8");
 //http://127.0.0.1:7545
 // connect to local blockchain
 const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
+const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 // let wallet = new ethers.Wallet.fromEncryptedJsonSync(
 //   encryptedJson,
 //   process.env.PRIVATE_KEY_PASSWORD
 // );
 // wallet = await wallet.connect(provider);
 
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 // contract application binary interface compiled file
 const abi = fs.readFileSync("./SimpleStorage_sol_SimpleStorage.abi", "utf-8");
 //contract binary compiled file
@@ -27,11 +27,13 @@ async function main() {
   const contractFactory = new ethers.ContractFactory(abi, binary, wallet);
   console.log("deploying....please wait....");
   const contract = await contractFactory.deploy(); // wait for contract to deploy
-  //const transactionReciept = await contract.deployTransaction.wait(1);
+  //const transactionReciept =
+  await contract.deployTransaction.wait(1);
+  console.log(`Contract Address: ${contract.address}`);
 
   const currentFavNumber = await contract.retrieve();
   console.log(`Current Favorite Number: ${currentFavNumber.toString()}`);
-  const transactionResponse = await contract.store("100");
+  const transactionResponse = await contract.store(100);
   const transactionReciept = await transactionResponse.wait(1);
   const updatedFavNumber = await contract.retrieve();
   console.log(`Updated favorite number is: ${updatedFavNumber}`);
