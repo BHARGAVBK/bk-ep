@@ -18,15 +18,19 @@ contract FundMe {
     //owner of this contract is to be assign
     address public immutable i_owner;
 
-    constructor() {
+    AggregatorV3Interface public priceFeed;
+
+    constructor(address priceFeedAddress) {
         i_owner = msg.sender;
+        priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
     //to send fund
     function fund() public payable {
         //Checks given value either equal or above minimum else revert transaction
         require(
-            PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD,
+            PriceConverter.getConversionRate(msg.value, priceFeed) >=
+                MINIMUM_USD,
             "Did not send enough!"
         );
         funders.push(msg.sender);
