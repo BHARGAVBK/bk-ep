@@ -6,9 +6,12 @@
 pragma solidity ^0.8.8;
 import "./PriceConverter.sol";
 
-error NotOwner();
+//Error
+error FundMe__NotOwner();
 
 contract FundMe {
+    //State variables
+
     //minimum USD in 18Digit
     uint256 public constant MINIMUM_USD = 10 * 1000000000000000000;
     //this array stores addresses of funders
@@ -68,7 +71,7 @@ contract FundMe {
         //security check ,only owner of this contract can withdraw
         //equire(msg.sender == i_owner,"Sender is not owner!");
         if (msg.sender != i_owner) {
-            revert NotOwner();
+            revert FundMe__NotOwner();
         }
         _;
     }
