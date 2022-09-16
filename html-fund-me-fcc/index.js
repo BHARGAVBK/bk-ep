@@ -7,7 +7,7 @@ const fundButton = document.getElementById("fundButton");
 connectButton.onclick = connect;
 fundButton.onclick = fund;
 
-console.log(ethers);
+//to connect wallet
 async function connect() {
   if (typeof window.ethereum !== "undefined") {
     await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -16,8 +16,17 @@ async function connect() {
     alert("Please Install MetaMask!");
   }
 }
+
+//return wallet's balance
+async function getBalance() {
+  if (window.ethereum !== "undefined") {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+  }
+}
+//fund to contract
 async function fund() {
-  const ethAmount = "1";
+  const ethAmount = document.getElementById("ethAmount").value;
   console.log(`funding ${ethAmount} ...`);
   if (typeof window.ethereum !== "undefined") {
     // provider / connection to the blockchain
@@ -43,6 +52,7 @@ async function fund() {
   }
 }
 
+//event listner
 function listenForTransactionMine(transactionResponse, provider) {
   console.log(`Mining ${transactionResponse.hash} ...`);
   //create listener for the blockchain
