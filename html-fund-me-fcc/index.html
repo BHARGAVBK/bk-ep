@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fund Me Contract</title>
-</head>
-<body>
+  </head>
+  <body>
     Meta Mask
-    <script>
-        async function connect() {
-            if (typeof window.ethereum !== "undefined") {
-                window.ethereum.request({method: "eth_requestAccounts"});
-            }
-            else
-            {
-                alert("No Mata Mask!");
-            }
-        }
-    </script>
-    <button id="connectButton" onclick="connect()">Connect</button>
-</body>
+    <script src="./index.js" type="module"></script>
+    <button id="connectButton">connect</button>
+    <button id="fundButton">fund</button>
+    <!-- form -->
+    <br />
+    <label for="fund">ETH Amount</label>
+    <input id="ethAmount" type="text" placeholder="0.1" />
+  </body>
 </html>
